@@ -7,6 +7,25 @@ var worker_type = "worker_type";
 
 if (cluster.isMaster) {
   console.log('MASTER OF THE UNIVERSE!');
+
+  cluster.on('fork', function(worker){
+    console.log("worker id: %j  forked", worker.id);
+  });
+
+  cluster.on('online', function(worker){
+    console.log("worker id: %j online", worker.id);
+  });
+  
+  cluster.on('exit', function(worker){
+    console.log("worker id: %j exited", worker.id);
+    if (!worker.suicide){
+      console.log("--- it was murder.");
+    }
+    else{
+      console.log("--- it was suicide.");
+    }
+  });
+  
   var env = {};
   env[worker_type] =  "WORKER DATA YO";
   _(3).times(function(){
