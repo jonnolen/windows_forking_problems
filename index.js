@@ -8,6 +8,10 @@ var worker_type = "worker_type";
 if (cluster.isMaster) {
   console.log('MASTER OF THE UNIVERSE!');
 
+  process.on('uncaughtException', function(err) {
+    console.dir(err);
+  });
+
   cluster.on('fork', function(worker){
     console.log("worker id: %j  forked", worker.id);
   });
