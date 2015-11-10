@@ -35,4 +35,9 @@ if (cluster.isMaster) {
 else {
   cluster.worker[worker_type] = process.env[worker_type];
   console.log("worker started, id: %j, pid: %j worker_type: %j", cluster.worker.id, process.pid, cluster.worker.worker_type);
+  if (cluster.worker.id % 2 == 0){
+    cluster.worker.kill(1);
+  }else{
+    throw new Error("let it go.");
+  }
 }
