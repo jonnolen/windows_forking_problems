@@ -14,5 +14,6 @@ if (cluster.isMaster) {
   });
 }
 else {
-  console.log("worker started, id: %j, pid: %j worker_type: %j", cluster.worker.id, process.pid, process.env[worker_type]);
+  cluster.worker[worker_type] = process.env[worker_type];
+  console.log("worker started, id: %j, pid: %j worker_type: %j", cluster.worker.id, process.pid, cluster.worker.worker_type);
 }
